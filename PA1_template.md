@@ -159,7 +159,20 @@ meanIntervals <- aggregate(steps ~ timeOfDay, activityData, mean, na.rm=TRUE)
 Plot the data
 
 ```r
-xyplot(steps ~ timeOfDay, meanIntervals, type="l", col = "blue",ylab="Number of steps", xlab="5-min. intervals from midnight", main="Average number of steps by 5-minutes intervals")
+#This piece of code is set the right number of timeOfDay intervals for the lattice plotting system
+#Set the number of intervals
+x.tick.number <- 10
+#Get the point at which the intervals appen i.e the row numbers. Because this data is split into weekend and weekday data we divide by 2
+at <- round(seq(1, nrow(meanIntervals), length.out=x.tick.number))
+#Setup the labels definitions
+labels <- c()
+for (r in at)
+{
+  #convert from factor to get the correct time of day for label
+  labels <- append(labels, lapply(meanIntervals[r, "timeOfDay"], as.character))
+}
+
+xyplot(steps ~ timeOfDay, meanIntervals, type="l", col = "blue",ylab="Number of steps", xlab="5-min. intervals from midnight", main="Average number of steps by 5-minutes intervals", scales=list(x=list(at=at, labels=unlist(labels))))
 ```
 
 ![](./PA1_template_files/figure-html/unnamed-chunk-11-1.png) 
@@ -308,12 +321,26 @@ What is the impact of imputing missing data on the estimates of the total daily 
 ```r
 meanCleanInterval <- aggregate(steps ~ timeOfDay, cleanActivityData, mean)
 
-xyplot(steps ~ timeOfDay, meanCleanInterval, type="l", col = "blue", ylab="Number of steps", xlab="5-min. intervals from midnight", main="Average number of steps by 5-minutes intervals with missing values estimated")
+#This piece of code is set the right number of timeOfDay intervals for the lattice plotting system
+#Set the number of intervals
+x.tick.number <- 10
+#Get the point at which the intervals appen i.e the row numbers. Because this data is split into weekend and weekday data we divide by 2
+at <- round(seq(1, nrow(meanCleanInterval), length.out=x.tick.number))
+#Setup the labels definitions
+labels <- c()
+for (r in at)
+{
+  #convert from factor to get the correct time of day for label
+  labels <- append(labels, lapply(meanCleanInterval[r, "timeOfDay"], as.character))
+}
+
+
+xyplot(steps ~ timeOfDay, meanCleanInterval, type="l", col = "blue", ylab="Number of steps", xlab="5-min. intervals from midnight", main="Average number of steps by 5-minutes intervals with missing values estimated", scales=list(x=list(at=at, labels=unlist(labels))))
 ```
 
 ![](./PA1_template_files/figure-html/unnamed-chunk-18-1.png) 
 
-## Are there differences in activity patterns between weekdays and weekends?
+##5. Are there differences in activity patterns between weekdays and weekends?
 
 5.1. Create a new factor variable in the dataset with two levels - "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.
 
@@ -351,8 +378,20 @@ head(cleanActivityData)
 ```r
 meanIntervalsByDayType <- aggregate(steps ~ timeOfDay + dayType, data=cleanActivityData, mean)
 
-
-xyplot(steps ~ timeOfDay | dayType, data=meanIntervalsByDayType, type="l", col="green", grid=TRUE, layout=c(1,2), ylab="Number of steps", xlab="5-min. intervals from midnight", main="Average  5-min. activity intervals: Weekdays vs. Weekends")
+#This piece of code is set the right number of timeOfDay intervals for the lattice plotting system
+#Set the number of intervals
+x.tick.number <- 10
+#Get the point at which the intervals appen i.e the row numbers. Because this data is split into weekend and weekday data we divide by 2
+at <- round(seq(1, nrow(meanIntervalsByDayType)/2, length.out=x.tick.number))
+#Setup the labels definitions
+labels <- c()
+for (r in at)
+{
+  #convert from factor to get the correct time of day for label
+  labels <- append(labels, lapply(meanIntervalsByDayType[r, "timeOfDay"], as.character))
+}
+#Need to unlist the lables to a vector
+xyplot(steps ~ timeOfDay | dayType, data=meanIntervalsByDayType, type="l", col="green", layout=c(1,2), ylab="Number of steps", xlab="5-min. intervals from midnight", main="Average  5-min. activity intervals: Weekdays vs. Weekends", scales=list(x=list(at=at, labels=unlist(labels)))) 
 ```
 
 ![](./PA1_template_files/figure-html/unnamed-chunk-22-1.png) 
