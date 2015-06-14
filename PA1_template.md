@@ -334,7 +334,6 @@ for (r in at)
   labels <- append(labels, lapply(meanCleanInterval[r, "timeOfDay"], as.character))
 }
 
-
 xyplot(steps ~ timeOfDay, meanCleanInterval, type="l", col = "blue", ylab="Number of steps", xlab="5-min. intervals from midnight", main="Average number of steps by 5-minutes intervals with missing values estimated", scales=list(x=list(at=at, labels=unlist(labels))))
 ```
 
@@ -344,13 +343,13 @@ xyplot(steps ~ timeOfDay, meanCleanInterval, type="l", col = "blue", ylab="Numbe
 
 5.1. Create a new factor variable in the dataset with two levels - "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.
 
-Add the Day to our cleanData
+Add a day column to our clean dataset
 
 ```r
 cleanActivityData$day <- weekdays(cleanActivityData$date)
 ```
 
-Add weekend value to our cleanData
+Add a day type (Weekday/Weekend) to our clean dataset
 
 ```r
 cleanActivityData$dayType <- as.factor(ifelse(weekdays(cleanActivityData$date) %in% c("Saturday","Sunday"), "Weekend", "Weekday")) 

@@ -247,12 +247,12 @@ xyplot(steps ~ timeOfDay, meanCleanInterval, type="l", col = "blue", ylab="Numbe
 
 5.1. Create a new factor variable in the dataset with two levels - "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.
 
-Add the Day to our cleanData
+Add a day column to our clean dataset
 ```{r}
 cleanActivityData$day <- weekdays(cleanActivityData$date)
 ```
 
-Add weekend value to our cleanData
+Add a day type (Weekday/Weekend) to our clean dataset
 ```{r}
 cleanActivityData$dayType <- as.factor(ifelse(weekdays(cleanActivityData$date) %in% c("Saturday","Sunday"), "Weekend", "Weekday")) 
 ```
