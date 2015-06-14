@@ -217,7 +217,7 @@ meanCleanInterval <- aggregate(steps ~ timeOfDay, cleanActivityData, mean)
 xyplot(steps ~ timeOfDay, meanCleanInterval, type="l", col = "blue", ylab="Number of steps", xlab="5-min. intervals from midnight", main="Average number of steps by 5-minutes intervals with missing values estimated")
 ```
 
-## Are there differences in activity patterns between weekdays and weekends?
+##5. Are there differences in activity patterns between weekdays and weekends?
 
 5.1. Create a new factor variable in the dataset with two levels - "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.
 
